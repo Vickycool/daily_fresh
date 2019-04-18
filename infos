@@ -1,0 +1,47 @@
+注册用户 creat_user
+  反向解析 生成首页对应的地址
+
+
+ 校验用户名是否重复  
+ 从数据库程序： object.get()
+ 返回满足条件的一条
+ 抛异常 doesnotexsixt
+
+ if user:
+ 	render()
+
+
+
+ if request.method == 'GET'
+ 	显示注册页面
+
+  else 
+     表单验证注册	
+
+ ------------------------------------------------------------
+
+ 类视图
+ 继承 Django.views.generic  Views
+
+继承 get() post()
+ urls 重新配置和 引入 as_view() -> 实质返回内部的view ->dispatch（）分发不同的函数
+
+------------------------------------------------------------
+发送激活邮件，包含激活链接
+->生成激活用户token
+
+itsdangerous : pip install
+TimedJSONWebSignatureSerializer
+
+加密 user-> RegisterView -> POST
+setting 作为密钥
+
+
+解密 user->ActiveView-> get
+url: ^active/(?p<token>.*$ 
+view 接收 token
+解密,-> 激活 数据库获取id, is_active = 1 -> 登陆loginview 重定向 反向解析 
+or过期
+
+发送邮件参考课件
+
