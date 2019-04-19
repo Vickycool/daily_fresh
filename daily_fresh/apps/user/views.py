@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import View
 from django.conf import settings
 from django.http import HttpResponse
+from django.contrib.auth import authenticate
 
 from itsdangerous import SignatureExpired
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -119,7 +120,19 @@ class ActiveView(View):
             # 激活链接已过期
             return HttpResponse('激活链接已过期')
 
+
 # user/login
 class LoginView(View):
     def get(self, request):
         return render(request, 'login.html')
+
+    def post(self, request):
+        username = request.POST.get('username')
+        pwd = request.POST.get('pwd')
+        remember = request.POST.get('remember')
+
+        if not all([username, pwd]):
+            return render(request, 'login.html', {'errmsg': '用户名或密码不能为空'})
+
+        user = authenticate(username=username, password=pwd)
+        if user
